@@ -1,6 +1,9 @@
 #!/bin/bash
 # Copyright 2016  Nicanor garcia
 # Apache 2.0.
+# Edited 2019
+# Juan Camio Vasquez-Correa
+# juan.vasquez@fau.de
 #
 
 M=$1
@@ -8,6 +11,7 @@ ivector_dim=$2
 num_gselect=$3
 featFile=$4
 mDir=$5
+
 
 . path.sh
 
@@ -20,8 +24,9 @@ if [ ! -f ${featFile} ]; then echo "There are no characteristics to process"; ex
 # k=${k%.*}
 # num_gselect=$((k+1))
 
+SCRIPT_PATH=$(dirname `which $0`)
 
 if [ ! -d $mDir ]; then	mkdir -p $mDir; fi
-kaldi_ivector/train_diagUBM.sh --num-gselect $num_gselect $featFile $M $mDir || exit 1;
-kaldi_ivector/train_fullUBM.sh --num-gselect $num_gselect $featFile $mDir $mDir/ubm || exit 1;
-kaldi_ivector/train_ivector_extractor.sh --ivector-dim $ivector_dim --num-gselect $num_gselect $mDir/ubm/final.ubm $featFile $mDir/extractor || exit 1;
+$SCRIPT_PATH/train_diagUBM.sh  $featFile $M $num_gselect $mDir || exit 1;
+$SCRIPT_PATH/train_fullUBM.sh  $featFile $num_gselect $mDir $mDir/ubm || exit 1;
+$SCRIPT_PATH/train_ivector_extractor.sh $ivector_dim $num_gselect $mDir/ubm/final.ubm $featFile $mDir/extractor || exit 1;

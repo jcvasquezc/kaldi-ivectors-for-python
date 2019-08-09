@@ -4,6 +4,7 @@
 # Apache 2.0.
 
 # Modified by Copyright 2017 Nicanor Garcia-Ospina
+# Modified by Copyright 2019 Juan Camilo Vasquez-Correa
 # Apache 2.0.
 
 # This script extracts iVectors for a set of utterances, given
@@ -19,27 +20,14 @@ posterior_scale=1.0 # This scale helps to control for successve features being h
 
 echo "$0 $@"  # Print the command line for logging
 
-if [ -f path.sh ]; then . ./path.sh; fi
-. kaldi_ivector/parse_options.sh || exit 1;
+SCRIPT_PATH=$(dirname `which $0`)
+if [ -f path.sh ]; then . $SCRIPT_PATH/path.sh; fi
+$SCRIPT_PATH/parse_options.sh || exit 1;
 
-
-if [ $# != 3 ]; then
-  echo "Usage: $0 <extractor-dir> <features> <ivector-dir>"
-  echo " e.g.: $0 exp/extractor_2048_male data/train_male.scp exp/ivectors_male"
-  echo "main options (for others, see top of script file)"
-  echo "  --config <config-file>                           # config containing options"
-  echo "  --num-iters <#iters|10>                          # Number of iterations of E-M"
-  echo "  --nj <n|10>                                      # Number of jobs (also see num-processes and num-threads)"
-  echo "  --num-threads <n|8>                              # Number of threads for each process"
-  echo "  --num-gselect <n|20>                             # Number of Gaussians to select using"
-  echo "                                                   # diagonal model."
-  echo "  --min-post <min-post|0.025>                      # Pruning threshold for posteriors"
-  exit 1;
-fi
-
-srcdir=$1
-features=$2
-dir=$3
+num_gselect=$1
+srcdir=$2
+features=$3
+dir=$4
 
 if [ -f $dir/ivector.scp ]; then
 	exit 0;

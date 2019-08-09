@@ -2,21 +2,19 @@ num_frames=5000000
 subsample=2 # subsample all features with this periodicity, in the main E-M phase.
 num_iters_init=20
 num_iters=4
-num_gselect=8 # Number of Gaussian-selection indices to use while training
-               # the model.
 min_gaussian_weight=0.0001
 remove_low_count_gaussians=true
 
-if [ -f path.sh ]; then . ./path.sh; fi
+SCRIPT_PATH=$(dirname `which $0`)
 
-. kaldi_ivector/parse_options.sh || exit 1;
+if [ -f path.sh ]; then . $SCRIPT_PATH/path.sh; fi
 
-# Filename with the training characteristics
-data=$1
-# Number of Gaussians
-num_gauss=$2
-# Directory to save
-dir=$3
+$SCRIPT_PATH/parse_options.sh || exit 1;
+
+data=$1 # Filename with the training characteristics
+num_gauss=$2 # Number of Gaussians
+num_gselect=$3 # Number of Gaussians to select in the training process
+dir=$4 # Directory to save
 
 if [ -f $dir/final.dubm ]; then
 	exit 0;

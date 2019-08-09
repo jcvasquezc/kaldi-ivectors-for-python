@@ -4,14 +4,17 @@ num_iters=4
 subsample=2
 min_gaussian_weight=0.0001
 remove_low_count_gaussians=true
-num_gselect=4 # Number of Gaussian-selection indices to use while training the model.
 
-if [ -f path.sh ]; then . ./path.sh; fi
-. kaldi_ivector/parse_options.sh || exit 1;
+SCRIPT_PATH=$(dirname `which $0`)
+
+if [ -f path.sh ]; then . $SCRIPT_PATH/path.sh; fi
+
+$SCRIPT_PATH/parse_options.sh || exit 1;
 
 data=$1
-srcdir=$2
-dir=$3
+num_gselect=$2
+srcdir=$3
+dir=$4
 
 
 if [ -f $dir/final.ubm ]; then

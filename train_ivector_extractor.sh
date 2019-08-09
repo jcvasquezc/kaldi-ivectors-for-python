@@ -7,15 +7,15 @@ posterior_scale=1.0 # This scale helps to control for successve features being h
 num_samples_for_weights=3 # smaller than the default for speed (relates to a sampling method)
 cleanup=true
 
-num_gselect=4 # Number of Gaussian-selection indices to use while training the model.
-num_feats=60
-ivector_dim=400 # $(( $num_feats*$num_gselect )) # dimension of the extracted i-vector
-if [ -f path.sh ]; then . ./path.sh; fi
-. kaldi_ivector/parse_options.sh || exit 1;
+SCRIPT_PATH=$(dirname `which $0`)
+if [ -f path.sh ]; then . $SCRIPT_PATH/path.sh; fi
+$SCRIPT_PATH/parse_options.sh || exit 1;
 
-fgmm_model=$1
-data=$2
-dir=$3
+ivector_dim=$1 # dimension of the extracted i-vector
+num_gselect=$2 # Number of Gaussian-selection indices to use while training the model.
+fgmm_model=$3
+data=$4
+dir=$5
 
 
 echo "The ivector dimension is: $ivector_dim"

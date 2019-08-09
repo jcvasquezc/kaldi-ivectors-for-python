@@ -1,19 +1,3 @@
-# kaldi-ivectors-for-python
-This repository allows to use kaldi to train an i-vector extractor and extract i-vectors through a python interface. Far from perfect as it uses os.system calls.
-
-
-### Installation
-
-To install please run
-
-```sh
-install.sh
-```
-
-
-### Example:
-To run both the training and then extract the i-vector you would
-```python
 import kaldi_ivector as kiv
 import os
 
@@ -30,4 +14,3 @@ ivectors,keys=Ivector.extract(PATH+'/example_data/example_model/extractor', PATH
 
 print(ivectors.shape)
 print(keys)
-```
